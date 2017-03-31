@@ -6,11 +6,11 @@ import org.sql2o.*;
 public class Client {
   private int id;
   private String name;
+  private String number;
   private LocalDateTime createdAt;
-  private int number;
   private int stylist_id;
 
-  public Client(String name, int number) {
+  public Client(String name, String number) {
     this.name = name;
     this.number = number;
     createdAt = LocalDateTime.now();

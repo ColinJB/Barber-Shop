@@ -6,11 +6,11 @@ import java.time.LocalDateTime;
 public class Stylist {
   private int id;
   private String name;
-  private int number;
+  private String number;
   private LocalDateTime createdAt;
 
 
-  public Stylist(String name, int number) {
+  public Stylist(String name, String number) {
     this.name = name;
     this.number = number;
     createdAt = LocalDateTime.now();

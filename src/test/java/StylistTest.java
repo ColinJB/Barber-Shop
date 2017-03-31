@@ -8,6 +8,4 @@ public class StylistTest {
   @Rule
   public DatabaseRule database = new DatabaseRule();
 
-  @Test
-  public void
 }
