@@ -93,4 +93,12 @@ public class ClientTest {
     assertEquals(null, Client.find(testClient.getId()));
   }
 
+  @Test
+  public void addToQueue_addsClientToQueue() {
+    Client.createQueue();
+    Client testClient = new Client("Deborah", "404-644-6644", 1);
+    testClient.addToQueue();
+    assertTrue(Client.getQueue().contains(testClient));
+  }
+
 }

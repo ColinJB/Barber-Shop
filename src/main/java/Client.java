@@ -10,12 +10,18 @@ public class Client {
   private String number;
   private LocalDateTime created_at;
   private int stylist_id;
+  private static ArrayList<Client> queue;
 
   public Client(String name, String number, int stylist_id) {
     this.name = name;
     this.number = number;
     created_at = LocalDateTime.now();
     this.stylist_id = stylist_id;
+  }
+
+  public static void createQueue() {
+    ArrayList<Client> queue = new ArrayList<Client>();
+    Client.queue = queue;
   }
 
   public String getName() {
@@ -105,6 +111,20 @@ public class Client {
         .addParameter("id", this.getId())
         .executeUpdate();
     }
+  }
 
+  public static ArrayList<Client> getQueue() {
+    return Client.queue;
+  }
+
+  public void addToQueue() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "UPDATE clients SET stylist_id=null WHERE id=:id;";
+      con.createQuery(sql)
+        .addParameter("id", this.getId())
+        .executeUpdate();
+      ArrayList<Client> queue = Client.getQueue();
+      queue.add(this);
+    }
   }
 }
