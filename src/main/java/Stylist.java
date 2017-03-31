@@ -71,6 +71,10 @@ public class Stylist {
     return id;
   }
 
+  public void setId(int newId) {
+    this.id = newId;
+  }
+
   public static Stylist find(int id) {
     try(Connection con = DB.sql2o.open()) {
       String sql = "SELECT * FROM stylists WHERE id=:id;";

@@ -11,10 +11,11 @@ public class Client {
   private LocalDateTime created_at;
   private int stylist_id;
 
-  public Client(String name, String number) {
+  public Client(String name, String number, int stylist_id) {
     this.name = name;
     this.number = number;
     created_at = LocalDateTime.now();
+    this.stylist_id = stylist_id;
   }
 
   public String getName() {
@@ -76,5 +77,9 @@ public class Client {
         .executeAndFetchFirst(Client.class);
       return client;
     }
+  }
+
+  public int getStylistId() {
+    return stylist_id;
   }
 }
