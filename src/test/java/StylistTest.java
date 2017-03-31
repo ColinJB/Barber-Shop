@@ -64,4 +64,16 @@ public class StylistTest {
     testStylist.save();
     assertEquals(testStylist, Stylist.find(testStylist.getId()));
   }
+
+  @Test
+  public void getClients_returnsListOfAllClientsWithSameStylistId() {
+    Stylist testStylist = new Stylist("Deborah", "404-644-6644");
+    testStylist.save();
+    Client firstClient = new Client("Colin", "555", testStylist.getId());
+    Client secondClient = new Client("Caitlin", "777", testStylist.getId());
+    firstClient.save();
+    secondClient.save();
+    Client[] clients = new Client[] { firstClient, secondClient };
+    assertTrue(testStylist.getClients().containsAll(Arrays.asList(clients)));
+  }
 }
