@@ -4,9 +4,15 @@ import java.util.List;
 import org.sql2o.*;
 
 public class Client {
+  private int id;
+  private String name;
+  private LocalDateTime createdAt;
+  private int number;
+  private int stylist_id;
 
-
-  public Client() {
-    
+  public Client(String name, int number) {
+    this.name = name;
+    this.number = number;
+    createdAt = LocalDateTime.now();
   }
 }
