@@ -101,5 +101,4 @@ public class ClientTest {
     assertTrue(Client.getQueue().contains(testClient));
     assertEquals(Client.find(testClient.getStylistId()), null);
   }
-
 }

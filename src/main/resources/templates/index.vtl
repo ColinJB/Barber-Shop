@@ -1,0 +1,67 @@
+<div class="jumbotron">
+<h1><strong>Beast</strong> <em>Tamer</em> Barbershop<br><small>Employee & Client Management Dashboard</h1>
+</div>
+<div class="row">
+  <div class="col-md-4">
+    <h3>List of Stylists:</h3>
+    #if ($stylists.size() > 0)
+      <ul>
+        #foreach ($stylist in $stylists)
+          <li><a href="/stylist/$stylist.getId()">$stylist.getName()</a></li>
+        #end
+      </ul>
+    #else
+    <p>There are no stylists yet!</p>
+    #end
+  </div>
+  <div class="col-md-4">
+    <img>
+  </div>
+  <div class="col-md-4">
+    <h3>Client Queue: <small>(Unclaimed clients)</small></h3>
+    #if ($clientQueue.size() > 0)
+      <ol>
+        #foreach ($client in $clientQueue)
+          <li>
+            $client.getName()
+            <ul>
+              <li>$client.getNumber()</li>
+            </ul>
+          </li>
+        #end
+      </ol>
+    #else
+      <p>There are currently no clients without designated stylists.</p>
+    #end
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <h3>Add a stylist:</h3>
+    <form action="/stylist" method="post">
+      <div class="form-group">
+        <label for="stylistName">Name:</label>
+        <input id="stylistName" name="stylistName" type="text" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="stylistNumber">Phone Number:</label>
+        <input id="stylistNumber" name="stylistNumber" type="text" class="form-control">
+      </div>
+      <button type="submit" class="btn btn-primary">Add New Stylist</button>
+    </form>
+  </div>
+  <div class="col-md-6">
+    <h3>Add a client:</h3>
+    <form action="/client" method="post">
+      <div class="form-group">
+        <label for="clientName">Name:</label>
+        <input id="clientName" name="clientName" type="text" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="clientNumber">Phone Number:</label>
+        <input id="clientNumber" name="clientNumber" type="text" class="form-control">
+      </div>
+      <button type="submit" class="btn btn-info">Add New Client</button>
+    </form>
+  </div>
+</div>
