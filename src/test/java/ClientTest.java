@@ -99,6 +99,7 @@ public class ClientTest {
     Client testClient = new Client("Deborah", "404-644-6644", 1);
     testClient.addToQueue();
     assertTrue(Client.getQueue().contains(testClient));
+    assertEquals(Client.find(testClient.getStylistId()), null);
   }
 
 }

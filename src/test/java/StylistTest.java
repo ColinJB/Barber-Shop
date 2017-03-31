@@ -85,4 +85,12 @@ public class StylistTest {
     assertEquals(Stylist.find(testStylist.getId()).getName(), "Deb");
     assertEquals(Stylist.find(testStylist.getId()).getNumber(), "888");
   }
+
+  @Test
+  public void delete_deletesStylist_true() {
+    Stylist testStylist = new Stylist("Deborah", "404-644-6644");
+    testStylist.save();
+    Stylist.find(testStylist.getId()).delete();
+    assertEquals(null, Stylist.find(testStylist.getId()));
+  }
 }

@@ -108,4 +108,18 @@ public class Stylist {
         .executeUpdate();
     }
   }
+
+  public void delete() {
+    List<Client> clients = new ArrayList<Client>();
+    clients = this.getClients();
+    for ( Client eachClient : clients ) {
+      eachClient.addToQueue();
+    }
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "DELETE FROM stylists WHERE id=:id;";
+      con.createQuery(sql)
+        .addParameter("id", this.getId())
+        .executeUpdate();
+    }
+  }
 }
