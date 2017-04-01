@@ -34,7 +34,7 @@
       <p>There are currently no clients without designated stylists.</p>
     #end
   </div>
-</div>
+</div><br>
 <div class="row">
   <div class="col-md-6">
     <h3>Add a stylist:</h3>
@@ -46,7 +46,7 @@
       <div class="form-group">
         <label for="stylistNumber">Phone Number:</label>
         <input id="stylistNumber" name="stylistNumber" type="text" class="form-control">
-      </div>
+      </div><br><br>
       <button type="submit" class="btn btn-primary">Add New Stylist</button>
     </form>
   </div>
@@ -61,6 +61,14 @@
         <label for="clientNumber">Phone Number:</label>
         <input id="clientNumber" name="clientNumber" type="text" class="form-control">
       </div>
+      <div class="form-group" style="float: right">
+        <label for="stylist">Stylist:</label>
+        <select id='stylist_id' name='stylist_id' type='text' style="display: inline" class="form-control">
+          #foreach($stylist in $stylists)
+            <option value="$stylist.getId()">$stylist.getName()</option>
+          #end
+        </select>
+      </div><br><br>
       <button type="submit" class="btn btn-info">Add New Client</button>
     </form>
   </div>

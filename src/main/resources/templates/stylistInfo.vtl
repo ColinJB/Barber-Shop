@@ -1,0 +1,45 @@
+<h2>Stylist:<strong>$stylist.getName()</strong><br><small>Phone Number: <strong>$stylist.getNumber()</strong></small></h2>
+<br>
+<div class="row">
+  <div class="col-md-4">
+    <h3>List of current clients:</h3>
+    <ol>
+      #foreach ($client in $clients)
+        #if ($client.getStylistId() == $stylist.getId())
+          <li>
+            Name: <strong>$client.getName()</strong>
+            <ul><li>Phone Number: <strong>$client.getNumber()</strong></li></ul>
+          </li>
+        #end
+      #end
+    </ol>
+  </div>
+  <div class="col-md-4">
+    <h3>Add a client for <strong>$stylist.getName()</strong>:</h3>
+    <form action="/stylist/$stylist.getId()/client" method="post">
+      <div class="form-group">
+        <label for="clientName">Name:</label>
+        <input id="clientName" name="clientName" type="text" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="clientNumber">Phone Number:</label>
+        <input id="clientNumber" name="clientNumber" type="text" class="form-control">
+      </div>
+      <button type="submit" class="btn btn-info">Add New Client</button>
+    </form>
+  </div>
+  <div class="col-md-4">
+    <h3>Update Stylist Information:</h3>
+    <form action="/stylist/$stylist.getId()/update" method="post">
+      <div class="form-group">
+        <label for="stylistName">Name:</label>
+        <input id="stylistName" name="stylistName" type="text" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="stylistNumber">Phone Number:</label>
+        <input id="stylistNumber" name="stylistNumber" type="text" class="form-control">
+      </div>
+      <button type="submit" class="btn btn-success">Update Stylist</button>
+    </form>
+  </div>
+</div>

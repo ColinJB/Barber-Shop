@@ -17,6 +17,48 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+    post("/stylist", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      String name = request.queryParams("stylistName");
+      String number = request.queryParams("stylistNumber");
+      Stylist newStylist = new Stylist(name, number);
+      newStylist.save();
+      response.redirect("/");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    get("/stylist/:stylist_id", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      model.put("stylist", Stylist.find(Integer.parseInt(request.params(":stylist_id"))));
+      model.put("clients", Client.all());
+      model.put("template", "templates/stylistInfo.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    post("/stylist/:stylist_id/client", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      String name = request.queryParams("clientName");
+      String number = request.queryParams("clientNumber");
+      int stylist_id = Integer.parseInt(request.params(":stylist_id"));
+      Client newClient = new Client(name, number, stylist_id);
+      newClient.save();
+      model.put("stylist", Stylist.find(Integer.parseInt(request.params(":stylist_id"))));
+      model.put("clients", Client.all());
+      response.redirect(request.headers("Referer"));
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    post("/stylist/:stylist_id/update", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      Stylist stylist = Stylist.find(Integer.parseInt(request.params(":stylist_id")));
+      String name = request.queryParams("stylistName");
+      String number = request.queryParams("stylistNumber");
+      stylist.update(name, number);
+      model.put("stylist", Stylist.find(Integer.parseInt(request.params(":stylist_id"))));
+      model.put("clients", Client.all());
+      response.redirect(request.headers("Referer"));
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
 
   }
 }
