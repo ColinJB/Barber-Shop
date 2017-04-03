@@ -19,19 +19,17 @@
   </div>
   <div class="col-md-4">
     <h3>Client Queue: <small>(Unclaimed clients)</small></h3>
-    #if ($clientQueue.size() > 0)
-      <ol>
-        #foreach ($client in $clientQueue)
+    #foreach ($client in $clients)
+      #if ($client.getStylistId() == 0)
+        <ol>
           <li>
             $client.getName()
             <ul>
               <li>$client.getNumber()</li>
             </ul>
           </li>
-        #end
-      </ol>
-    #else
-      <p>There are currently no clients without designated stylists.</p>
+        </ol>
+      #end
     #end
   </div>
 </div><br>
@@ -64,6 +62,7 @@
       <div class="form-group" style="float: right">
         <label for="stylist">Stylist:</label>
         <select id="stylist_id" name="stylist_id" type="text" style="display: inline" class="form-control">
+          <option value=0>None</option>
           #foreach($stylist in $stylists)
             <option value="$stylist.getId()">$stylist.getName()</option>
           #end

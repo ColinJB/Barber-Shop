@@ -8,14 +8,12 @@ public class Client {
   private int id;
   private String name;
   private String number;
-  private LocalDateTime created_at;
   private int stylist_id;
   private static ArrayList<Client> queue;
 
   public Client(String name, String number, int stylist_id) {
     this.name = name;
     this.number = number;
-    created_at = LocalDateTime.now();
     this.stylist_id = stylist_id;
   }
 
@@ -32,10 +30,6 @@ public class Client {
     return number;
   }
 
-  public LocalDateTime getCreatedAt() {
-    return this.created_at;
-  }
-
   @Override
   public boolean equals(Object otherClient) {
     if (!(otherClient instanceof Client)) {
@@ -46,19 +40,13 @@ public class Client {
     }
   }
 
-  public Timestamp getStamp() {
-    Timestamp timestamp = Timestamp.valueOf(this.created_at);
-    return timestamp;
-  }
-
   public void save() {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "INSERT INTO clients (name, number, stylist_id, created_at) VALUES (:name, :number, :stylist_id, :created_at);";
+      String sql = "INSERT INTO clients (name, number, stylist_id) VALUES (:name, :number, :stylist_id);";
       this.id = (int) con.createQuery(sql, true)
         .addParameter("name", this.name)
         .addParameter("number", this.number)
         .addParameter("stylist_id", this.stylist_id)
-        .addParameter("created_at", this.getStamp())
         .executeUpdate()
         .getKey();
     }
@@ -119,12 +107,12 @@ public class Client {
 
   public void addToQueue() {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "UPDATE clients SET stylist_id=null WHERE id=:id;";
+      String sql = "UPDATE clients SET stylist_id=0 WHERE id=:id;";
       con.createQuery(sql)
         .addParameter("id", this.getId())
         .executeUpdate();
-      ArrayList<Client> queue = Client.getQueue();
-      queue.add(this);
     }
   }
+
+
 }

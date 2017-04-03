@@ -8,13 +8,11 @@ public class Stylist {
   private int id;
   private String name;
   private String number;
-  private LocalDateTime created_at;
 
 
   public Stylist(String name, String number) {
     this.name = name;
     this.number = number;
-    created_at = LocalDateTime.now();
   }
 
   public String getName() {
@@ -23,10 +21,6 @@ public class Stylist {
 
   public String getNumber() {
     return number;
-  }
-
-  public LocalDateTime getCreatedAt() {
-    return this.created_at;
   }
 
   @Override
@@ -39,22 +33,12 @@ public class Stylist {
     }
   }
 
-  public Timestamp getStamp() {
-    Timestamp timestamp = Timestamp.valueOf(this.created_at);
-    return timestamp;
-  }
-
-  // public String getDate(created_at) {
-  //   String date = new SimpleDateFormat("MM/dd/yyyy").format(created_at);
-  // }
-
   public void save() {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "INSERT INTO stylists (name, number, created_at) VALUES (:name, :number, :created_at);";
+      String sql = "INSERT INTO stylists (name, number) VALUES (:name, :number);";
       this.id = (int) con.createQuery(sql, true)
         .addParameter("name", this.name)
         .addParameter("number", this.number)
-        .addParameter("created_at", this.getStamp())
         .executeUpdate()
         .getKey();
     }

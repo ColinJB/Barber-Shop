@@ -12,7 +12,7 @@ public class App {
     get("/", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       model.put("stylists", Stylist.all());
-      model.put("clientQueue", Client.getQueue());
+      model.put("clients", Client.all());
       model.put("template", "templates/index.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
@@ -65,13 +65,32 @@ public class App {
       String name = request.queryParams("clientName");
       String number = request.queryParams("clientNumber");
       int stylist_id = Integer.parseInt(request.queryParams("stylist_id"));
+      System.out.println(stylist_id);
       Client newClient = new Client(name, number, stylist_id);
       newClient.save();
+      if (stylist_id > 0) {
+        model.put("stylist", Stylist.find(stylist_id));
+        model.put("clients", Client.all());
+        model.put("template", "templates/stylistInfo.vtl");
+        return new ModelAndView(model, layout);
+      } else {
+        model.put("stylists", Stylist.all());
+        model.put("clients", Client.all());
+        model.put("template", "templates/index.vtl");
+        return new ModelAndView(model, layout);
+      }
+    }, new VelocityTemplateEngine());
+
+    post("/stylist/:stylist_id/delete", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      Stylist stylist = Stylist.find(Integer.parseInt(request.params(":stylist_id")));
+      stylist.delete();
       model.put("stylists", Stylist.all());
-      model.put("clientQueue", Client.getQueue());
+      model.put("clients", Client.all());
       model.put("template", "templates/index.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
+
 
   }
 }
