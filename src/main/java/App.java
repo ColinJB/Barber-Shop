@@ -91,6 +91,50 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+    get("/client/:client_id", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      Client client = Client.find(Integer.parseInt(request.params(":client_id")));
+      Stylist stylist = Stylist.find(client.getStylistId());
+      model.put("stylist", stylist);
+      model.put("client", client);
+      model.put("stylists", Stylist.all());
+      model.put("template", "templates/clientInfo.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    post("/client/:client_id/update", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      Client client = Client.find(Integer.parseInt(request.params(":client_id")));
+      String name = request.queryParams("updateName");
+      String number = request.queryParams("updateNumber");
+      client.update(name, number);
+      Stylist stylist = Stylist.find(client.getStylistId());
+      model.put("stylist", stylist);
+      model.put("client", client);
+      response.redirect(request.headers("Referer"));
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    post("/client/:client_id/delete", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      Client client = Client.find(Integer.parseInt(request.params(":client_id")));
+      client.delete();
+      model.put("stylists", Stylist.all());
+      model.put("clients", Client.all());
+      model.put("template", "templates/index.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    post("/client/:client_id/assign", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      Client client = Client.find(Integer.parseInt(request.params(":client_id")));
+      int stylist_id = Integer.parseInt(request.queryParams("stylist_id"));
+      client.assign(client.getId(), stylist_id);
+      model.put("stylists", Stylist.all());
+      model.put("clients", Client.all());
+      model.put("template", "templates/index.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
 
   }
 }

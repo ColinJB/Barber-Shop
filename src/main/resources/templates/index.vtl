@@ -23,7 +23,7 @@
       #if ($client.getStylistId() == 0)
         <ol>
           <li>
-            $client.getName()
+            <a href="/client/$client.getId()">$client.getName()</a>
             <ul>
               <li>$client.getNumber()</li>
             </ul>

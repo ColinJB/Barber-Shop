@@ -7,7 +7,7 @@
       #foreach ($client in $clients)
         #if ($client.getStylistId() == $stylist.getId())
           <li>
-            Name: <strong>$client.getName()</strong>
+            Name: <strong><a href="/client/$client.getId()">$client.getName()</a></strong>
             <ul><li>Phone Number: <strong>$client.getNumber()</strong></li></ul>
           </li>
         #end
