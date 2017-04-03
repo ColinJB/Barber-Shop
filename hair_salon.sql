@@ -2,12 +2,11 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.6.2
--- Dumped by pg_dump version 9.6.2
+-- Dumped from database version 9.5.3
+-- Dumped by pg_dump version 9.5.3
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
@@ -35,22 +34,21 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: clients; Type: TABLE; Schema: public; Owner: colinjbloom
+-- Name: clients; Type: TABLE; Schema: public; Owner: Guest
 --
 
 CREATE TABLE clients (
     id integer NOT NULL,
     name character varying,
     number character varying,
-    createdat timestamp without time zone,
     stylist_id integer
 );
 
 
-ALTER TABLE clients OWNER TO colinjbloom;
+ALTER TABLE clients OWNER TO "Guest";
 
 --
--- Name: clients_id_seq; Type: SEQUENCE; Schema: public; Owner: colinjbloom
+-- Name: clients_id_seq; Type: SEQUENCE; Schema: public; Owner: Guest
 --
 
 CREATE SEQUENCE clients_id_seq
@@ -61,31 +59,30 @@ CREATE SEQUENCE clients_id_seq
     CACHE 1;
 
 
-ALTER TABLE clients_id_seq OWNER TO colinjbloom;
+ALTER TABLE clients_id_seq OWNER TO "Guest";
 
 --
--- Name: clients_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: colinjbloom
+-- Name: clients_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Guest
 --
 
 ALTER SEQUENCE clients_id_seq OWNED BY clients.id;
 
 
 --
--- Name: stylists; Type: TABLE; Schema: public; Owner: colinjbloom
+-- Name: stylists; Type: TABLE; Schema: public; Owner: Guest
 --
 
 CREATE TABLE stylists (
     id integer NOT NULL,
     name character varying,
-    number character varying,
-    createdat timestamp without time zone
+    number character varying
 );
 
 
-ALTER TABLE stylists OWNER TO colinjbloom;
+ALTER TABLE stylists OWNER TO "Guest";
 
 --
--- Name: stylists_id_seq; Type: SEQUENCE; Schema: public; Owner: colinjbloom
+-- Name: stylists_id_seq; Type: SEQUENCE; Schema: public; Owner: Guest
 --
 
 CREATE SEQUENCE stylists_id_seq
@@ -96,61 +93,65 @@ CREATE SEQUENCE stylists_id_seq
     CACHE 1;
 
 
-ALTER TABLE stylists_id_seq OWNER TO colinjbloom;
+ALTER TABLE stylists_id_seq OWNER TO "Guest";
 
 --
--- Name: stylists_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: colinjbloom
+-- Name: stylists_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Guest
 --
 
 ALTER SEQUENCE stylists_id_seq OWNED BY stylists.id;
 
 
 --
--- Name: clients id; Type: DEFAULT; Schema: public; Owner: colinjbloom
+-- Name: id; Type: DEFAULT; Schema: public; Owner: Guest
 --
 
 ALTER TABLE ONLY clients ALTER COLUMN id SET DEFAULT nextval('clients_id_seq'::regclass);
 
 
 --
--- Name: stylists id; Type: DEFAULT; Schema: public; Owner: colinjbloom
+-- Name: id; Type: DEFAULT; Schema: public; Owner: Guest
 --
 
 ALTER TABLE ONLY stylists ALTER COLUMN id SET DEFAULT nextval('stylists_id_seq'::regclass);
 
 
 --
--- Data for Name: clients; Type: TABLE DATA; Schema: public; Owner: colinjbloom
+-- Data for Name: clients; Type: TABLE DATA; Schema: public; Owner: Guest
 --
 
-COPY clients (id, name, number, createdat, stylist_id) FROM stdin;
+COPY clients (id, name, number, stylist_id) FROM stdin;
+9	Wilbur	444-444-4444	5
+2	Caitlin	404-492-4941	0
+11	Willie	777-777-7777	0
 \.
 
 
 --
--- Name: clients_id_seq; Type: SEQUENCE SET; Schema: public; Owner: colinjbloom
+-- Name: clients_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Guest
 --
 
-SELECT pg_catalog.setval('clients_id_seq', 1, false);
+SELECT pg_catalog.setval('clients_id_seq', 11, true);
 
 
 --
--- Data for Name: stylists; Type: TABLE DATA; Schema: public; Owner: colinjbloom
+-- Data for Name: stylists; Type: TABLE DATA; Schema: public; Owner: Guest
 --
 
-COPY stylists (id, name, number, createdat) FROM stdin;
+COPY stylists (id, name, number) FROM stdin;
+5	Caiti	31253315
 \.
 
 
 --
--- Name: stylists_id_seq; Type: SEQUENCE SET; Schema: public; Owner: colinjbloom
+-- Name: stylists_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Guest
 --
 
-SELECT pg_catalog.setval('stylists_id_seq', 1, false);
+SELECT pg_catalog.setval('stylists_id_seq', 5, true);
 
 
 --
--- Name: clients clients_pkey; Type: CONSTRAINT; Schema: public; Owner: colinjbloom
+-- Name: clients_pkey; Type: CONSTRAINT; Schema: public; Owner: Guest
 --
 
 ALTER TABLE ONLY clients
@@ -158,11 +159,21 @@ ALTER TABLE ONLY clients
 
 
 --
--- Name: stylists stylists_pkey; Type: CONSTRAINT; Schema: public; Owner: colinjbloom
+-- Name: stylists_pkey; Type: CONSTRAINT; Schema: public; Owner: Guest
 --
 
 ALTER TABLE ONLY stylists
     ADD CONSTRAINT stylists_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: epicodus
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM epicodus;
+GRANT ALL ON SCHEMA public TO epicodus;
+GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
 --
