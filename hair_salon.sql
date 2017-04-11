@@ -70,39 +70,6 @@ ALTER SEQUENCE clients_id_seq OWNED BY clients.id;
 
 
 --
--- Name: queue; Type: TABLE; Schema: public; Owner: colinjbloom
---
-
-CREATE TABLE queue (
-    id integer NOT NULL,
-    client_id integer
-);
-
-
-ALTER TABLE queue OWNER TO colinjbloom;
-
---
--- Name: queue_id_seq; Type: SEQUENCE; Schema: public; Owner: colinjbloom
---
-
-CREATE SEQUENCE queue_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE queue_id_seq OWNER TO colinjbloom;
-
---
--- Name: queue_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: colinjbloom
---
-
-ALTER SEQUENCE queue_id_seq OWNED BY queue.id;
-
-
---
 -- Name: stylists; Type: TABLE; Schema: public; Owner: colinjbloom
 --
 
@@ -144,13 +111,6 @@ ALTER TABLE ONLY clients ALTER COLUMN id SET DEFAULT nextval('clients_id_seq'::r
 
 
 --
--- Name: queue id; Type: DEFAULT; Schema: public; Owner: colinjbloom
---
-
-ALTER TABLE ONLY queue ALTER COLUMN id SET DEFAULT nextval('queue_id_seq'::regclass);
-
-
---
 -- Name: stylists id; Type: DEFAULT; Schema: public; Owner: colinjbloom
 --
 
@@ -173,21 +133,6 @@ COPY clients (id, name, number, stylist_id) FROM stdin;
 --
 
 SELECT pg_catalog.setval('clients_id_seq', 3, true);
-
-
---
--- Data for Name: queue; Type: TABLE DATA; Schema: public; Owner: colinjbloom
---
-
-COPY queue (id, client_id) FROM stdin;
-\.
-
-
---
--- Name: queue_id_seq; Type: SEQUENCE SET; Schema: public; Owner: colinjbloom
---
-
-SELECT pg_catalog.setval('queue_id_seq', 1, false);
 
 
 --
@@ -216,14 +161,6 @@ SELECT pg_catalog.setval('stylists_id_seq', 5, true);
 
 ALTER TABLE ONLY clients
     ADD CONSTRAINT clients_pkey PRIMARY KEY (id);
-
-
---
--- Name: queue queue_pkey; Type: CONSTRAINT; Schema: public; Owner: colinjbloom
---
-
-ALTER TABLE ONLY queue
-    ADD CONSTRAINT queue_pkey PRIMARY KEY (id);
 
 
 --
